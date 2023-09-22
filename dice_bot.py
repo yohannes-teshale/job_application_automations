@@ -55,13 +55,13 @@ def login_to_dice():
 def search_for_jobs(max_jobs_to_apply):
     driver.get(f"https://www.dice.com/jobs?q={keywords}%20&location=United%20States&latitude=37.09024&longitude=-95.712891&countryCode=US&locationPrecision=Country&radius=30&radiusUnit=mi&page=1&pageSize={max_jobs_to_apply}&filters.postedDate=ONE&filters.easyApply=true&language=en&eid=S2Q_")
 
-def apply_for_jobs(filename):
+def apply_for_jobs(filename,max_jobs_to_apply):
 
     job_links = WebDriverWait(driver, 20).until(
         EC.presence_of_all_elements_located((By.CLASS_NAME, "card-title-link"))
     )
     num_jobs_applied=0
-    for i in range(0,len(job_links)):
+    for i in range(len(job_links)):
         try:
             
             job_links = WebDriverWait(driver, 20).until(
@@ -115,12 +115,8 @@ def apply_for_jobs(filename):
                     EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, 'eid=qpw')]"))
                 ).click()
             save_information_to_csv(filename,job_details)
-            
-        except StaleElementReferenceException:
-            continue
-        except UnexpectedAlertPresentException:
-            continue
-        except TimeoutException:
+        except Exception:
+            driver.get(f"https://www.dice.com/jobs?q={keywords}%20&location=United%20States&latitude=37.09024&longitude=-95.712891&countryCode=US&locationPrecision=Country&radius=30&radiusUnit=mi&page=1&pageSize={max_jobs_to_apply}&filters.postedDate=ONE&filters.easyApply=true&language=en&eid=S2Q_")
             continue
             
             
@@ -151,8 +147,8 @@ def save_information_to_csv(filename,job_details):
 if __name__=="__main__":
     filename=create_csv_file()
     login_to_dice()
-    search_for_jobs(200)
-    apply_for_jobs(filename)
+    search_for_jobs(300)
+    apply_for_jobs(filename,300)
     driver.quit()
     
   
