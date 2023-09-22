@@ -1,3 +1,4 @@
 # DICE BOT
 
-This is a bot for the lazy people.
+Usage:
+python/python3 dice_bot.py args...
