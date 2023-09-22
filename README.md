@@ -8,4 +8,4 @@ values and set them to your dice creds.
 Usage for dice:
 python/python3 dice_bot.py args...
 
-####other sites coming soon, hopefully
+#### other sites coming soon, hopefully
