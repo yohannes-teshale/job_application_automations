@@ -1,8 +1,11 @@
-# DICE BOT
+# JOB APPLICATION AUTOMATION SCRIPTS
 
-Create a .env file with 
-DICE_USERNAME
-DICE_PASSWORD values and set them to your dice creds.
+Create a .env file with: 
+DICE_USERNAME,
+DICE_PASSWORD 
+values and set them to your dice creds.
 
-Usage:
+Usage for dice:
 python/python3 dice_bot.py args...
+
+####other sites coming soon, hopefully
