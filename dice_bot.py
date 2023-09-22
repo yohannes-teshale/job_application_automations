@@ -61,9 +61,9 @@ def apply_for_jobs(filename):
         EC.presence_of_all_elements_located((By.CLASS_NAME, "card-title-link"))
     )
     num_jobs_applied=0
-    for i in range(23,len(job_links)):
+    for i in range(100,len(job_links)):
         try:
-            time.sleep(1)
+            
             job_links = WebDriverWait(driver, 20).until(
                     EC.presence_of_all_elements_located((By.CLASS_NAME, "card-title-link"))
                    )
@@ -151,9 +151,8 @@ def save_information_to_csv(filename,job_details):
 if __name__=="__main__":
     filename=create_csv_file()
     login_to_dice()
-    search_for_jobs(100)
+    search_for_jobs(200)
     apply_for_jobs(filename)
     driver.quit()
     
-    while True:
-        pass
+  
