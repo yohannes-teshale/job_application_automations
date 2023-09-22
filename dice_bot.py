@@ -61,7 +61,7 @@ def apply_for_jobs(filename):
         EC.presence_of_all_elements_located((By.CLASS_NAME, "card-title-link"))
     )
     num_jobs_applied=0
-    for i in range(100,len(job_links)):
+    for i in range(0,len(job_links)):
         try:
             
             job_links = WebDriverWait(driver, 20).until(
@@ -125,7 +125,7 @@ def apply_for_jobs(filename):
             
             
 def filter_jobs(job_title):
-    black_listed_words =[".NET","C#", "SHAREPOINT", "SHARE POINT", "LEAD", "ARCHITECT", "CLEARANCE", "USC/GC"]
+    black_listed_words =[".NET","C#", "SHAREPOINT", "SHARE POINT", "LEAD", "ARCHITECT", "CLEARANCE", "USC","GC","SECRET","TOP","NET","LOCAL","CITIZEN"]
 
     for i in black_listed_words:
         if i in job_title.upper():
