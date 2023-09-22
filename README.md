@@ -6,6 +6,6 @@ Create a .env file with:
 values and set them to your dice creds.
 > run: bash dependencies.sh
 
->python/python3 dice_bot.py args...
+> run: python/python3 dice_bot.py args...
 
  
