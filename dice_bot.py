@@ -76,6 +76,8 @@ def apply_for_jobs(filename,max_jobs_to_apply):
             action= ActionChains(driver)
             action.move_to_element(job_link).click().perform()
             # job_link.click()
+            #swith to new opened tab
+            driver.switch_to.window(driver.window_handles[1])
             apply_button = WebDriverWait(driver, 20).until(
                     EC.element_to_be_clickable((By.TAG_NAME, "apply-button-wc"))
                 )
@@ -85,15 +87,16 @@ def apply_for_jobs(filename,max_jobs_to_apply):
                     const shadowRoot = shadowHost.shadowRoot;
                     return shadowRoot.querySelector('p');"""
             shadow_element = driver.execute_script(shadow_root_script, apply_button)
-
+            
             if shadow_element and "Application Submitted" in shadow_element.text:
-                driver.back()
+                #close and come back to search tab
+                close_and_open_search_tab(driver)
                 continue
-             
             job_details= extract_info_from_page()
             isValid=filter_jobs(job_details.get('job_title'))
             if not isValid:
-                driver.back()
+                #close and come back to search tab
+                close_and_open_search_tab(driver)
                 continue;      
             apply_button.click()
             print('uploading resume...')      
@@ -108,18 +111,23 @@ def apply_for_jobs(filename,max_jobs_to_apply):
                 ).click()
             
             print('Application submitted')
+            #close and come back to search tab
+            close_and_open_search_tab(driver)
             num_jobs_applied += 1
             print(f"Applied for {num_jobs_applied} jobs.")
 
             WebDriverWait(driver, 10).until(
                     EC.element_to_be_clickable((By.XPATH, "//a[contains(@href, 'eid=qpw')]"))
                 ).click()
-            save_information_to_csv(filename,job_details)
+            save_information_to_csv(filename,job_details)            
         except Exception:
             driver.get(f"https://www.dice.com/jobs?q={keywords}%20&location=United%20States&latitude=37.09024&longitude=-95.712891&countryCode=US&locationPrecision=Country&radius=30&radiusUnit=mi&page=1&pageSize={max_jobs_to_apply}&filters.postedDate=ONE&filters.easyApply=true&language=en&eid=S2Q_")
             continue
             
             
+def close_and_open_search_tab(driver):
+    driver.close()
+    driver.switch_to.window(driver.window_handles[0])
 def filter_jobs(job_title):
     black_listed_words =[".NET","C#", "SHAREPOINT", "SHARE POINT", "LEAD", "ARCHITECT", "CLEARANCE", "USC","GC","SECRET","TOP","NET","LOCAL","CITIZEN"]
 
